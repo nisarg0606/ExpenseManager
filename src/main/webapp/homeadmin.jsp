@@ -64,10 +64,11 @@
 			<div class="container hero">
 				<div class="row">
 					<div class="col-md-10 offset-md-2">
-						<h1 class="text-center bg-info text-white">Welcome , Admin ${username}</h1>
-						<h2>User's Table</h2>
+						<h1 class="text-center bg-info text-white">Welcome , Admin
+							${username}</h1>
+						<h2 class="p-3 mb-2 bg-light text-dark">User's Table</h2>
 						<div class="text-center">
-							<table border="1" class="table table-dark">
+							<table border="1" class="table table-striped table-dark">
 								<thead>
 									<tr>
 										<th>UserID</th>
@@ -95,10 +96,50 @@
 										<td><%=name%></td>
 										<td><%=email%></td>
 										<td><%=usertype%></td>
+										<td><a href="DeleteUserServlet?User_id=<%=userid%>">Delete</a>
+											| <a href="ViewUserServlet?User_id=<%=userid%>">View</a> | <a
+											href="EditUserServlet?User_id=<%=userid%>">Edit</a></td>
+									</tr>
+									<%
+									}
+									%>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container hero">
+				<div class="row">
+					<div class="col-md-10 offset-md-2">
+						<%-- <h1 class="text-center bg-info text-white">Welcome , Admin
+							${username}</h1> --%>
+						<h2 class="p-3 mb-2 bg-light text-dark">Category's Table</h2>
+						<div class="text-center">
+							<table border="1" class="table table-striped table-dark">
+								<thead>
+									<tr>
+										<th>Category_Id</th>
+										<th>Category_Name</th>
+										<th>Delete/View/Edit</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+									rs = statement.executeQuery("select * from category order by 1");
+									%>
+									<%
+									while (rs.next()) {
+										int categoryid = rs.getInt(1);
+										String categoryname = rs.getString(2);
+									%>
+									<tr>
+										<td><%=categoryid%></td>
+										<td><%=categoryname%></td>
 										<td><a
-											href="DeleteUserServlet?User_id=<%=userid%>">Delete</a>
-											| <a href="ViewUserServlet?User_id=<%=userid%>">View</a>
-											| <a href="EditUserServlet?User_id=<%=userid%>">Edit</a></td>
+											href="DeleteCategoryServlet?Category_ID=<%=categoryid%>">Delete</a>
+											| <a href="ViewCategoryServlet?Category_ID=<%=categoryid%>">View</a>
+											| <a href="EditCategoryServlet?Category_ID=<%=categoryid%>">Edit</a></td>
 									</tr>
 									<%
 									}
