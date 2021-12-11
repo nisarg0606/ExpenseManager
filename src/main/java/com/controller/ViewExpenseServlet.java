@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.util.DBConnection;
 
-@WebServlet("/ViewCategoryServlet")
-public class ViewCategoryServlet extends HttpServlet{
+@WebServlet("/ViewExpenseServlet")
+public class ViewExpenseServlet extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int CategoryID = Integer.parseInt(request.getParameter("Category_ID"));
+		int CategoryID = Integer.parseInt(request.getParameter("Expense_ID"));
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("Select * from category where Category_ID=?");
+			PreparedStatement pstmt = conn.prepareStatement("Select * from Expense where Expense_ID=?");
 			pstmt.setInt(1, CategoryID);
 			
 			ResultSet rs = pstmt.executeQuery();
@@ -28,6 +28,6 @@ public class ViewCategoryServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		
-		request.getRequestDispatcher("ViewCategory.jsp").forward(request, response);
+		request.getRequestDispatcher("ViewExpense.jsp").forward(request, response);
 	}
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>View Category</title>
+<title>View Expense</title>
 <style>
 .center {
 	margin: auto;
@@ -28,21 +28,23 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th scope="col">CategoryID</th>
-					<th scope="col">categoryName</th>
+					<th scope="col">Category_ID</th>
+					<th scope="col">SubCategory_ID</th>
+					<th scope="col">Expense_ID</th>
+					<th scope="col">Expense_Name</th>
+					<th scope="col">Amount</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<th scope="row"><%=rs.getInt(1)%></th>
-					<td><%=rs.getString(2)%></td>
+					<th scope="row"><%=rs.getInt(2)%></th>
+					<th scope="row"><%=rs.getInt(3)%></th>
+					<th scope="row"><%=rs.getInt(4)%></th>
+					<td><%=rs.getString(5)%></td>
+					<td><%=rs.getFloat(6)%></td>
 				</tr>
 				</tbody>
 				</table>
 				</div>
-				<%-- UserID: <%= rs.getInt(1) %>
-	<br>Username: <%=rs.getString(2)%>
-	<br>Email: <%=rs.getString(3) %>
-	<br>User_type: <%=rs.getShort(5) %> --%>
 </body>
 </html>

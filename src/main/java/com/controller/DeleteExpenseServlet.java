@@ -12,17 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.util.DBConnection;
-@WebServlet("/DeleteCategoryServlet")
-public class DeleteCategoryServlet extends HttpServlet{
+@SuppressWarnings("serial")
+@WebServlet("/DeleteExpenseServlet")
+public class DeleteExpenseServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int CategoryId = Integer.parseInt(request.getParameter("Category_ID"));
+		int ExpenseId = Integer.parseInt(request.getParameter("Expense_ID"));
 		int i = -1;
 		try {
-			//in dao 
+			
+			//in daoo
 			Connection con = DBConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("delete from category where Category_ID=?");
-			pstmt.setInt(1, CategoryId);
+			PreparedStatement pstmt = con.prepareStatement("delete from expense where Expense_ID=?");
+			pstmt.setInt(1, ExpenseId);
 			i = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,10 +33,10 @@ public class DeleteCategoryServlet extends HttpServlet{
 		
 		if(i == 1)
 		{
-			rd =request.getRequestDispatcher("homeadmin.jsp");
+			rd =request.getRequestDispatcher("home.jsp");
 		}
 		else {
-			request.setAttribute("error", "Invalid Category Id");
+			request.setAttribute("error", "Invalid Expense Id");
 			rd = request.getRequestDispatcher("fail.jsp");
 		}
 		

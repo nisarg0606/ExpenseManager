@@ -1,0 +1,3 @@
+all query must be in dao 
+no access or use of result in controller or jsp 
+no multiple or duplicate query in login 

@@ -112,8 +112,6 @@
 			<div class="container hero">
 				<div class="row">
 					<div class="col-md-10 offset-md-2">
-						<%-- <h1 class="text-center bg-info text-white">Welcome , Admin
-							${username}</h1> --%>
 						<h2 class="p-3 mb-2 bg-light text-dark">Category's Table</h2>
 						<div class="text-center">
 							<table border="1" class="table table-striped table-dark">
@@ -144,6 +142,58 @@
 									<%
 									}
 									%>
+									<tr>
+										<td colspan="3"><a href="AddCategory.jsp">Add New
+												Category</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="container hero">
+				<div class="row">
+					<div class="col-md-10 offset-md-2">
+						<h2 class="p-3 mb-2 bg-light text-dark">Sub-Category's Table</h2>
+						<div class="text-center">
+							<table border="1" class="table table-striped table-dark">
+								<thead>
+									<tr>
+										<th>SubCategory_ID</th>
+										<th>Category_ID</th>
+										<th>SubCategory_Name</th>
+										<th>Delete/View/Edit</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+									rs = statement.executeQuery("select * from sub_category order by 1");
+									%>
+									<%
+									while (rs.next()) {
+										int subcategoryid = rs.getInt(1);
+										int categoryid = rs.getInt(2);
+										String subcategoryname = rs.getString(3);
+									%>
+									<tr>
+										<td><%=subcategoryid%></td>
+										<td><%=categoryid%></td>
+										<td><%=subcategoryname%></td>
+										<td><a
+											href="DeleteSubCategoryServlet?SubCategory_ID=<%=subcategoryid%>">Delete</a>
+											| <a href="ViewSubCategoryServlet?SubCategory_ID=<%=subcategoryid%>">View</a>
+											| <a href="EditSubCategoryServlet?SubCategory_ID=<%=subcategoryid%>">Edit</a></td>
+									</tr>
+									<%
+									}
+									%>
+									<tr>
+										<td colspan="4"><a href="AddSubCategory.jsp">Add New
+												SubCategory</a></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>

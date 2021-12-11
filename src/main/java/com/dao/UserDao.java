@@ -92,6 +92,23 @@ public class UserDao {
 		return name;
 	}
 
+	public static int User_id(UserBean userBean) {
+		int id = -1;
+		try {
+			Connection conn = DBConnection.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("Select User_id from users where email=? AND Password=?");
+			pstmt.setString(1, userBean.getEmail());
+			pstmt.setString(2, userBean.getPassword());
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				id = rs.getInt(1);
+//				System.out.println(id);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 	public UserBean getUserById(int UserId) {
 		try {
 			Connection conn = DBConnection.getConnection();
@@ -122,10 +139,11 @@ public class UserDao {
 		int i = -1;
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("update users set Name=?, email=?, Password=?");
+			PreparedStatement pstmt = conn.prepareStatement("update users set Name=?, email=?, Password=? where User_id=?");
 			pstmt.setString(1, userBean.getName());
 			pstmt.setString(2, userBean.getEmail());
 			pstmt.setString(3, userBean.getPassword());
+			pstmt.setInt(4, userBean.getUserId());
 			i = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

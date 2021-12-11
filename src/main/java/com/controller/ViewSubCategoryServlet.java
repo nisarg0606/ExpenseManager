@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.util.DBConnection;
 
-@WebServlet("/ViewCategoryServlet")
-public class ViewCategoryServlet extends HttpServlet{
+@WebServlet("/ViewSubCategoryServlet")
+public class ViewSubCategoryServlet extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int CategoryID = Integer.parseInt(request.getParameter("Category_ID"));
+		int SubCategoryID = Integer.parseInt(request.getParameter("SubCategory_ID"));
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("Select * from category where Category_ID=?");
-			pstmt.setInt(1, CategoryID);
+			PreparedStatement pstmt = conn.prepareStatement("Select * from sub_category where SubCategory_ID=?");
+			pstmt.setInt(1, SubCategoryID);
 			
 			ResultSet rs = pstmt.executeQuery();
 			request.setAttribute("rs", rs);
@@ -28,6 +28,6 @@ public class ViewCategoryServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		
-		request.getRequestDispatcher("ViewCategory.jsp").forward(request, response);
+		request.getRequestDispatcher("ViewSubCategory.jsp").forward(request, response);
 	}
 }

@@ -12,17 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.util.DBConnection;
-@WebServlet("/DeleteCategoryServlet")
-public class DeleteCategoryServlet extends HttpServlet{
+@WebServlet("/DeleteSubCategoryServlet")
+public class DeleteSubCategoryServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int CategoryId = Integer.parseInt(request.getParameter("Category_ID"));
+		int SubCategoryId = Integer.parseInt(request.getParameter("SubCategory_ID"));
 		int i = -1;
 		try {
-			//in dao 
 			Connection con = DBConnection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("delete from category where Category_ID=?");
-			pstmt.setInt(1, CategoryId);
+			PreparedStatement pstmt = con.prepareStatement("delete from sub_category where SubCategory_ID=?");
+			pstmt.setInt(1, SubCategoryId);
 			i = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,4 +40,3 @@ public class DeleteCategoryServlet extends HttpServlet{
 		rd.forward(request, response);
 	}
 }
-

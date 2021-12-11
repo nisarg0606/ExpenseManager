@@ -29,7 +29,8 @@ public class AddUserServlet extends HttpServlet{
 		
 		UserDao userDao = new UserDao();
 		i = userDao.insertUser(name, email, password);
-		i = userDao.insertUser(userBean);
+		i = userDao.insertUser(userBean);//why this two time
+		
 		
 		RequestDispatcher rd = null;
 		if(i == 1)

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>View Category</title>
+<title>View SubCategory</title>
 <style>
 .center {
 	margin: auto;
@@ -28,14 +28,16 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
+					<th scope="col">SubCategoryID</th>
 					<th scope="col">CategoryID</th>
-					<th scope="col">categoryName</th>
+					<th scope="col">SubcategoryName</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<th scope="row"><%=rs.getInt(1)%></th>
-					<td><%=rs.getString(2)%></td>
+					<th scope="row"><%=rs.getInt(2)%></th>
+					<td><%=rs.getString(3)%></td>
 				</tr>
 				</tbody>
 				</table>
