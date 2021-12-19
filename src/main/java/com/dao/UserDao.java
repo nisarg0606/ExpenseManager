@@ -3,6 +3,10 @@ package com.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.w3c.dom.UserDataHandler;
 
 import com.bean.UserBean;
 import com.util.DBConnection;
@@ -36,6 +40,27 @@ public class UserDao {
 
 	}
 
+	public List<UserBean> getAllUsers(){
+		ArrayList<UserBean> usd = new ArrayList<UserBean>();
+		try {
+			Connection conn = DBConnection.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("select * from users");
+			ResultSet rsd = pstmt.executeQuery();
+			while(rsd.next())
+			{
+				UserBean userdata = new UserBean();
+				userdata.setUserId(rsd.getInt(1));
+				userdata.setName(rsd.getString(2));
+				userdata.setEmail(rsd.getString(3));
+				userdata.setUserType(rsd.getShort(5));
+				usd.add(userdata);
+			}	
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return usd;
+	}
 	public int insertUser(String name, String email, String password) {
 		return 0;
 	}

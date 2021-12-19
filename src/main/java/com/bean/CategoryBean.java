@@ -3,9 +3,7 @@ package com.bean;
 public class CategoryBean {
 	private int categoryId;
  	private String categoryName;
-//	public int getCategoryId() {
-//		return categoryId;
-//	}
+ 	
 	public int getCategoryId() {
 		return categoryId;
 	}

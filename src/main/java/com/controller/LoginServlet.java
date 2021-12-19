@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,12 +33,14 @@ public class LoginServlet extends HttpServlet{
 		boolean type = UserDao.User_Type(userBean);//modify validate method so you will get all user info at once no need to call database query more than one in login 
 		String name = UserDao.User_name(userBean);
 		int id = UserDao.User_id(userBean);
+		UserDao userdata = new UserDao();
 		if(status)
 		{
 			if(type)
 			{
 				HttpSession session = request.getSession();
 				session.setAttribute("username", name);
+				request.setAttribute("userdata", userdata.getAllUsers());
 				rd = request.getRequestDispatcher("homeadmin.jsp");
 			}
 			else
@@ -49,7 +52,7 @@ public class LoginServlet extends HttpServlet{
 					
 					//read all expense using dao and bean 
 					Connection conn = DBConnection.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement("select category.Category_Name, sub_category.SubCategory_Name, Expense_ID, Expense_Name, Amount from expense JOIN category on category.Category_ID = expense.Category_ID JOIN sub_category ON sub_category.SubCategory_ID = expense.SubCategory_ID where expense.User_id = "+id);
+					PreparedStatement pstmt = conn.prepareStatement("select Date, category.Category_Name, sub_category.SubCategory_Name, Expense_ID, Expense_Name, Amount from expense JOIN category on category.Category_ID = expense.Category_ID JOIN sub_category ON sub_category.SubCategory_ID = expense.SubCategory_ID where expense.User_id = "+id);
 					ResultSet rs = pstmt.executeQuery();
 					request.setAttribute("expenseTable", rs);
 				} catch (Exception e) {

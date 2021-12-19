@@ -75,6 +75,7 @@
 							<table border="1" class="table table-striped table-dark">
 								<thead>
 									<tr>
+										<th>Date</th>
 										<th>Category Name</th>
 										<th>SubCategory Name</th>
 										<th>Expense Name</th>
@@ -84,23 +85,22 @@
 								</thead>
 								<tbody>
 									<%
-									//int userId = 5;
-									//ResultSet rs = statement.executeQuery("select category.Category_Name, sub_category.SubCategory_Name, Expense_ID, Expense_Name, Amount from expense JOIN category on category.Category_ID = expense.Category_ID JOIN sub_category ON sub_category.SubCategory_ID = expense.SubCategory_ID where expense.User_id = "+ userId);
 									ResultSet rs = (ResultSet) request.getAttribute("expenseTable");
 									%>
 									<%
-									if(rs != null)
-									{
-										
-									while (rs.next()) {
-										String categoryname = rs.getString(1);
-										String subcategoryname = rs.getString(2);
-										String expensename = rs.getString(4);
-										float amount = rs.getFloat(5);
-										int expenseid = rs.getInt(3);
+									if (rs != null) {
+
+										while (rs.next()) {
+											String date = rs.getString(1);
+											String categoryname = rs.getString(2);
+											String subcategoryname = rs.getString(3);
+											String expensename = rs.getString(5);
+											float amount = rs.getFloat(6);
+											int expenseid = rs.getInt(4);
 									%>
-									
+
 									<tr>
+										<td><%=date%></td>
 										<td><%=categoryname%></td>
 										<td><%=subcategoryname%></td>
 										<td><%=expensename%></td>
@@ -112,14 +112,12 @@
 									</tr>
 									<%
 									}
-									}
-									else
-									{
-										
+									} else {
+
 									}
 									%>
 									<tr>
-										<td colspan="5"><a href="AddExpense.jsp">Add New
+										<td colspan="6"><a href="AddExpense.jsp">Add New
 												Expense</a></td>
 									</tr>
 								</tbody>

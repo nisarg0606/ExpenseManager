@@ -16,11 +16,12 @@ import com.util.DBConnection;
 @WebServlet("/ViewExpenseServlet")
 public class ViewExpenseServlet extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int CategoryID = Integer.parseInt(request.getParameter("Expense_ID"));
+		int ExpenseID = Integer.parseInt(request.getParameter("Expense_ID"));
+		System.out.println(ExpenseID);
 		try {
 			Connection conn = DBConnection.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("Select * from Expense where Expense_ID=?");
-			pstmt.setInt(1, CategoryID);
+			pstmt.setInt(1, ExpenseID);
 			
 			ResultSet rs = pstmt.executeQuery();
 			request.setAttribute("rs", rs);

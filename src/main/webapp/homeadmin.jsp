@@ -1,3 +1,5 @@
+<%@page import="com.bean.UserBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.util.DBConnection"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.Statement"%>

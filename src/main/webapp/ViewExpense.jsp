@@ -28,6 +28,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
+					<th scope="col">Date</th>
 					<th scope="col">Category_ID</th>
 					<th scope="col">SubCategory_ID</th>
 					<th scope="col">Expense_ID</th>
@@ -37,11 +38,12 @@
 			</thead>
 			<tbody>
 				<tr>
-					<th scope="row"><%=rs.getInt(2)%></th>
-					<th scope="row"><%=rs.getInt(3)%></th>
+					<td scope="col"><%=rs.getString(1)%></td>
+					<td><%=rs.getInt(3)%></td>
 					<th scope="row"><%=rs.getInt(4)%></th>
-					<td><%=rs.getString(5)%></td>
-					<td><%=rs.getFloat(6)%></td>
+					<th scope="row"><%=rs.getInt(5)%></th>
+					<td><%=rs.getString(6)%></td>
+					<td><%=rs.getFloat(7)%></td>
 				</tr>
 				</tbody>
 				</table>

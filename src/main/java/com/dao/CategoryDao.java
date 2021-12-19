@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.bean.CategoryBean;
 import com.util.DBConnection;
@@ -83,5 +84,23 @@ public class CategoryDao {
 			e.printStackTrace();
 		}
 		return i;
+	}
+	
+	public ArrayList<CategoryBean> getAllCategories(){
+		ArrayList<CategoryBean> categories = new ArrayList<CategoryBean>();
+		try {
+			Connection conn = DBConnection.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("select * from category");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CategoryBean cb = new CategoryBean();
+				cb.setCategoryId(rs.getInt("Category_ID"));
+				cb.setCategoryName(rs.getString("Category_Name"));
+				categories.add(cb);	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return categories;
 	}
 }
