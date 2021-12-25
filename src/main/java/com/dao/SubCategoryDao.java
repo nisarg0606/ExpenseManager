@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.bean.SubCategoryBean;
 import com.util.DBConnection;
 
@@ -12,7 +14,8 @@ public class SubCategoryDao {
 		int i = -1;
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("insert into sub_category (Category_ID, SubCategory_Name) values (?, ?)");
+			PreparedStatement pstmt = conn
+					.prepareStatement("insert into sub_category (Category_ID, SubCategory_Name) values (?, ?)");
 			pstmt.setInt(1, SubCategoryBean.getCategoryId());
 			pstmt.setString(2, SubCategoryBean.getSubcategoryName());
 			i = pstmt.executeUpdate();
@@ -33,6 +36,33 @@ public class SubCategoryDao {
 		}
 		return null;
 
+	}
+
+	public ArrayList<SubCategoryBean> getAllSubCatByCategoryId(int categoryId)
+
+	{
+		ArrayList<SubCategoryBean> subCategories = new ArrayList<SubCategoryBean>();
+		try {
+			Connection conn = DBConnection.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("select * from sub_category where category_ID = ?");
+			pstmt.setInt(1, categoryId);
+
+			ResultSet rs = pstmt.executeQuery();// id fn em pass
+
+			while (rs.next()) {
+
+				SubCategoryBean sb = new SubCategoryBean();
+
+				sb.setCategoryId(categoryId);
+				sb.setSubcategoryId(rs.getInt("subCategory_ID"));
+				sb.setSubcategoryName(rs.getString("subCategory_Name"));
+				subCategories.add(sb);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return subCategories;
 	}
 
 //	public int insertCategoryByName(CategoryBean CategoryBean) {
@@ -74,8 +104,8 @@ public class SubCategoryDao {
 		int i = -1;
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn
-					.prepareStatement("update sub_category set SubCategory_Name=?, Category_ID=? where SubCategory_ID=?");
+			PreparedStatement pstmt = conn.prepareStatement(
+					"update sub_category set SubCategory_Name=?, Category_ID=? where SubCategory_ID=?");
 			pstmt.setString(1, subcategoryBean.getSubcategoryName());
 			pstmt.setInt(2, subcategoryBean.getCategoryId());
 			pstmt.setInt(3, subcategoryBean.getSubcategoryId());

@@ -17,55 +17,53 @@ import javax.servlet.http.HttpSession;
 import com.bean.UserBean;
 import com.dao.UserDao;
 import com.util.DBConnection;
+
 @WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet{
+public class LoginServlet extends HttpServlet {
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("email");
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
-		
-		UserBean userBean = new UserBean();	
-		userBean.setEmail(username);
+
+		UserBean userBean = new UserBean();
+		userBean.setEmail(email);
 		userBean.setPassword(password);
 		boolean status = UserDao.validate(userBean);
-		RequestDispatcher rd= null;
-		boolean type = UserDao.User_Type(userBean);//modify validate method so you will get all user info at once no need to call database query more than one in login 
-		String name = UserDao.User_name(userBean);
+		RequestDispatcher rd = null;
+		boolean type = UserDao.User_Type(userBean);// modify validate method so you will get all user info at once no
+													// need to call database query more than one in login
+		String username = UserDao.User_name(userBean);
 		int id = UserDao.User_id(userBean);
 		UserDao userdata = new UserDao();
-		if(status)
-		{
-			if(type)
-			{
+		if (status) {
+			if (type) {
 				HttpSession session = request.getSession();
-				session.setAttribute("username", name);
+				session.setAttribute("username", username);
 				request.setAttribute("userdata", userdata.getAllUsers());
 				rd = request.getRequestDispatcher("homeadmin.jsp");
-			}
-			else
-			{
+			} else {
 				HttpSession session = request.getSession();
-				session.setAttribute("username", name);
+				session.setAttribute("username", username);
 				session.setAttribute("id", id);
-				try {
-					
-					//read all expense using dao and bean 
-					Connection conn = DBConnection.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement("select Date, category.Category_Name, sub_category.SubCategory_Name, Expense_ID, Expense_Name, Amount from expense JOIN category on category.Category_ID = expense.Category_ID JOIN sub_category ON sub_category.SubCategory_ID = expense.SubCategory_ID where expense.User_id = "+id);
-					ResultSet rs = pstmt.executeQuery();
-					request.setAttribute("expenseTable", rs);
-				} catch (Exception e) {
-					
-				}
-				rd = request.getRequestDispatcher("home.jsp");
+				/*
+				 * try {
+				 * 
+				 * //read all expense using dao and bean Connection conn =
+				 * DBConnection.getConnection(); PreparedStatement pstmt = conn.
+				 * prepareStatement("select Date, category.Category_Name, sub_category.SubCategory_Name, Expense_ID, Expense_Name, Amount from expense JOIN category on category.Category_ID = expense.Category_ID JOIN sub_category ON sub_category.SubCategory_ID = expense.SubCategory_ID where expense.User_id = "
+				 * +id); ResultSet rs = pstmt.executeQuery();
+				 * request.setAttribute("expenseTable", rs); } catch (Exception e) {
+				 * 
+				 * }
+				 */
+				rd = request.getRequestDispatcher("HomeServlet");
 			}
-		}
-		else {
+		} else {
 			rd = request.getRequestDispatcher("fail.jsp");
 		}
-		
+
 		rd.forward(request, response);
-		
+
 	}
 }

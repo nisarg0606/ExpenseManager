@@ -1,3 +1,6 @@
+<%@page import="com.bean.UserBean"%>
+<%@page import="com.dao.ExpenseDao"%>
+<%@page import="com.bean.ExpenseBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.util.DBConnection"%>
@@ -22,6 +25,8 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Bitter:400,700">
 <link rel="stylesheet" href="assets/css/homestyle.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 </head>
 
 <body>
@@ -85,10 +90,15 @@
 								</thead>
 								<tbody>
 									<%
-									ResultSet rs = (ResultSet) request.getAttribute("expenseTable");
+									/* ResultSet rs = (ResultSet) request.getAttribute("expenseTable"); */
+									/* ExpenseDao expdao = new ExpenseDao(); */
+/* 									int userid = (Integer) session.getAttribute("id");
+ */									/* ExpenseBean expenseBean = new ExpenseBean(); */
+									/* expenseBean.setUserId(user.getUserId()); */
+									ArrayList<ExpenseBean> expenses =(ArrayList<ExpenseBean>) request.getAttribute("expenses");
 									%>
 									<%
-									if (rs != null) {
+									/* if (rs != null) {
 
 										while (rs.next()) {
 											String date = rs.getString(1);
@@ -96,10 +106,10 @@
 											String subcategoryname = rs.getString(3);
 											String expensename = rs.getString(5);
 											float amount = rs.getFloat(6);
-											int expenseid = rs.getInt(4);
+											int expenseid = rs.getInt(4); */
 									%>
 
-									<tr>
+									<%-- <tr>
 										<td><%=date%></td>
 										<td><%=categoryname%></td>
 										<td><%=subcategoryname%></td>
@@ -109,19 +119,49 @@
 											href="DeleteExpenseServlet?Expense_ID=<%=expenseid%>">Delete</a>
 											| <a href="ViewExpenseServlet?Expense_ID=<%=expenseid%>">View</a>
 											| <a href="EditExpenseServlet?Expense_ID=<%=expenseid%>">Edit</a></td>
+									</tr> --%>
+									<%
+									float sum = 0;
+									for (ExpenseBean eb : expenses) {
+										//int expenseid = eb.getExpenseId();
+										sum = sum + eb.getAmount();
+									%>
+									<tr>
+										<td><%=eb.getDate()%></td>
+										<td><%=eb.getCategoryName()%></td>
+										<td><%=eb.getSubcategoryName()%></td>
+										<td><%=eb.getExpenseName()%></td>
+										<td><%=eb.getAmount()%></td>
+
+										<td><a
+											href="DeleteExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">Delete</a>
+											| <a
+											href="ViewExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">View</a>
+											| <a
+											href="EditExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">Edit</a></td>
 									</tr>
 									<%
-									}
-									} else {
-
 									}
 									%>
 									<tr>
 										<td colspan="6"><a href="AddExpense.jsp">Add New
 												Expense</a></td>
 									</tr>
+									<tr>
+										<td colspan="6">Total expense: <%=sum%></td>
+									</tr>
 								</tbody>
 							</table>
+
+							<%
+							ArrayList<ExpenseBean> exp = (ArrayList<ExpenseBean>) request.getAttribute("exp");
+							HashMap<String, Integer> expMap = (HashMap<String, Integer>) request.getAttribute("expMap");
+							%>
+
+
+							<div style="height: 50; width: 50">
+								<canvas id="myChart" width="400" height="400"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -134,6 +174,50 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+		<script>
+<%Set<String> hs = expMap.keySet();%>
+	const ctx = document.getElementById('myChart').getContext('2d');
+	/* ctx.canvas.width = 300;
+	ctx.canvas.height = 300; */
+	const myChart = new Chart(ctx, {
+		type : 'pie',
+		data : {
+			labels :  
+				[ 
+					<%for (String x : hs) {%>
+						'<%=x%>',
+					<%}%>
+					
+			],
+			datasets : [ {
+				label : 'Categories',
+				data : [ 
+					<%for (String x : hs) {%>
+					<%=expMap.get(x)%>,
+					<%}%>
+					],
+				backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
+						'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)' ],
+				borderColor : [ 'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
+						'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)' ],
+				borderWidth : 1,
+				radius: 150
+			} ]
+		},
+		options : {
+			responsive: false,
+			scales : {
+				y : {
+					beginAtZero : true
+				}
+			}
+		}
+	});
+</script>
 </body>
 
 </html>
