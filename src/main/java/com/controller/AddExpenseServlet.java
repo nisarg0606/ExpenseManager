@@ -35,6 +35,6 @@ public class AddExpenseServlet extends HttpServlet{
 		
 		new ExpenseDao().addExpense(expenseBean);
 		
-		response.sendRedirect("home.jsp");
+		response.sendRedirect("HomeServlet");
 	}
 }

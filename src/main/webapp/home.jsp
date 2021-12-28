@@ -73,10 +73,15 @@
 			<div class="container hero">
 				<div class="row">
 					<div class="col-md-10 offset-md-2">
-						<h1 class="text-center bg-info text-white">Welcome , User
-							${username}, ${id}</h1>
-						<h2 class="p-3 mb-2 bg-light text-dark">Expense's Table</h2>
+						<h1 class="text-center bg-info text-white">Welcome ,
+							${username}</h1>
 						<div class="text-center">
+							<div class="col-md-10 offset-md-2">
+								<canvas id="myChart" width="400" height="400"
+									style="background: white;" class = "col-md-20 offset-md-2" options="{showTooltips: false}"></canvas>
+							</div>
+							<br> <br> <br>
+							<h2 class="p-3 mb-2 bg-light text-dark">Expense's Table</h2>
 							<table border="1" class="table table-striped table-dark">
 								<thead>
 									<tr>
@@ -92,10 +97,10 @@
 									<%
 									/* ResultSet rs = (ResultSet) request.getAttribute("expenseTable"); */
 									/* ExpenseDao expdao = new ExpenseDao(); */
-/* 									int userid = (Integer) session.getAttribute("id");
- */									/* ExpenseBean expenseBean = new ExpenseBean(); */
+									/* 									int userid = (Integer) session.getAttribute("id");
+									 */ /* ExpenseBean expenseBean = new ExpenseBean(); */
 									/* expenseBean.setUserId(user.getUserId()); */
-									ArrayList<ExpenseBean> expenses =(ArrayList<ExpenseBean>) request.getAttribute("expenses");
+									ArrayList<ExpenseBean> expenses = (ArrayList<ExpenseBean>) request.getAttribute("expenses");
 									%>
 									<%
 									/* if (rs != null) {
@@ -124,7 +129,7 @@
 									float sum = 0;
 									for (ExpenseBean eb : expenses) {
 										//int expenseid = eb.getExpenseId();
-										sum = sum + eb.getAmount();
+										sum = sum + eb.getAmount();// to display total expense
 									%>
 									<tr>
 										<td><%=eb.getDate()%></td>
@@ -133,12 +138,9 @@
 										<td><%=eb.getExpenseName()%></td>
 										<td><%=eb.getAmount()%></td>
 
-										<td><a
-											href="DeleteExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">Delete</a>
-											| <a
-											href="ViewExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">View</a>
-											| <a
-											href="EditExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">Edit</a></td>
+										<td><a href="DeleteExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">Delete</a>
+											| <a href="ViewExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">View</a>
+											| <a href="EditExpenseServlet?Expense_ID=<%=eb.getExpenseId()%>">Edit</a></td>
 									</tr>
 									<%
 									}
@@ -157,11 +159,6 @@
 							ArrayList<ExpenseBean> exp = (ArrayList<ExpenseBean>) request.getAttribute("exp");
 							HashMap<String, Integer> expMap = (HashMap<String, Integer>) request.getAttribute("expMap");
 							%>
-
-
-							<div style="height: 50; width: 50">
-								<canvas id="myChart" width="400" height="400"></canvas>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -174,13 +171,11 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-		<script>
+	<script>
 <%Set<String> hs = expMap.keySet();%>
 	const ctx = document.getElementById('myChart').getContext('2d');
-	/* ctx.canvas.width = 300;
-	ctx.canvas.height = 300; */
 	const myChart = new Chart(ctx, {
-		type : 'pie',
+		type : 'doughnut',
 		data : {
 			labels :  
 				[ 
@@ -196,28 +191,30 @@
 					<%=expMap.get(x)%>,
 					<%}%>
 					],
-				backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
-						'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
-						'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)',
-						'rgba(255, 159, 64, 0.2)' ],
+				backgroundColor : [ 'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86,1)',
+						'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)' ],
 				borderColor : [ 'rgba(255, 99, 132, 1)',
 						'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
 						'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)',
 						'rgba(255, 159, 64, 1)' ],
-				borderWidth : 1,
+				borderWidth : 5,
 				radius: 150
 			} ]
 		},
 		options : {
-			responsive: false,
+			responsive: false ,
 			scales : {
 				y : {
-					beginAtZero : true
+					/* beginAtZero : false, */
+					display: false
 				}
 			}
-		}
+		},
 	});
 </script>
+
 </body>
 
 </html>
