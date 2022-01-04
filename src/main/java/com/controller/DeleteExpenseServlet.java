@@ -33,7 +33,7 @@ public class DeleteExpenseServlet extends HttpServlet{
 		
 		if(i == 1)
 		{
-			rd =request.getRequestDispatcher("home.jsp");
+			rd =request.getRequestDispatcher("HomeServlet");
 		}
 		else {
 			request.setAttribute("error", "Invalid Expense Id");

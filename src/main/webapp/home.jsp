@@ -113,18 +113,6 @@
 											float amount = rs.getFloat(6);
 											int expenseid = rs.getInt(4); */
 									%>
-
-									<%-- <tr>
-										<td><%=date%></td>
-										<td><%=categoryname%></td>
-										<td><%=subcategoryname%></td>
-										<td><%=expensename%></td>
-										<td><%=amount%></td>
-										<td><a
-											href="DeleteExpenseServlet?Expense_ID=<%=expenseid%>">Delete</a>
-											| <a href="ViewExpenseServlet?Expense_ID=<%=expenseid%>">View</a>
-											| <a href="EditExpenseServlet?Expense_ID=<%=expenseid%>">Edit</a></td>
-									</tr> --%>
 									<%
 									float sum = 0;
 									for (ExpenseBean eb : expenses) {
@@ -163,8 +151,6 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 	<script
@@ -214,7 +200,5 @@
 		},
 	});
 </script>
-
 </body>
-
 </html>

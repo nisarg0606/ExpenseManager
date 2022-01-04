@@ -22,7 +22,7 @@ public class ExpenseDao {
 			ExpenseBean eb = new ExpenseBean();
 			eb.setExpenseId(rs.getInt("Expense_ID"));
 			eb.setCategoryId(rs.getInt("Category_ID"));
-			eb.setUserId(rs.getInt("Uset_id"));
+			eb.setUserId(rs.getInt("User_id"));
 			eb.setSubcategoryId(rs.getInt("SubCategory_ID"));
 			eb.setExpenseName(rs.getString("Expense_Name"));
 			eb.setAmount(rs.getFloat("Amount"));
