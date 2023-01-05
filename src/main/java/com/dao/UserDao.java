@@ -103,7 +103,7 @@ public class UserDao {
 		String name = "";
 		try {
 			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("Select Name from users where email=? AND Password=?");
+			PreparedStatement pstmt = conn.prepareStatement("Select Name from users where Email=? AND Password=?");
 			pstmt.setString(1, userBean.getEmail());
 			pstmt.setString(2, userBean.getPassword());
 			ResultSet rs = pstmt.executeQuery();
